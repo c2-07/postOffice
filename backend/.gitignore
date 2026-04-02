@@ -1,3 +1,4 @@
 uploads
 database.db
 .venv
+*/__pycache__
