@@ -2,15 +2,15 @@ from contextlib import asynccontextmanager
 
 from fastapi import APIRouter, FastAPI
 
+from app.api import routes_crud, routes_download, routes_search, routes_upload
 from app.database import init_db
-from app.routes import crud, downloads, search, upload
 
 api_router = APIRouter()
 
-api_router.include_router(upload.router)
-api_router.include_router(downloads.router)
-api_router.include_router(search.router)
-api_router.include_router(crud.router)
+api_router.include_router(routes_upload.router)
+api_router.include_router(routes_download.router)
+api_router.include_router(routes_search.router)
+api_router.include_router(routes_crud.router)
 
 
 @asynccontextmanager

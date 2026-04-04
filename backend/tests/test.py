@@ -1,8 +1,22 @@
-class Temp:
-    @property
-    def hello(self):
-        return "Hello"
+from abc import ABC, abstractmethod
 
 
-temp = Temp()
-print(temp.hello)
+class Base(ABC):
+    @classmethod
+    @abstractmethod
+    def sayHello(cls): ...
+
+    @classmethod
+    def bark(cls):
+        print("Bark Nigga")
+
+
+class First(Base):
+    def sayHello(cls):
+        cls.bark
+        print("Hello !")
+
+
+first = First()
+First().bark()
+first.sayHello()

@@ -4,14 +4,14 @@ from datetime import datetime, timezone
 import aiofiles
 from fastapi import HTTPException, UploadFile
 
-UPLOAD_DIR = "uploads"
+from app.core.config import settings
+
 CHUNK_SIZE = 1024 * 1024  # 1 MB
-MAX_FILE_SIZE = 1024 * 1024 * 1024 * 2  # 2 GB
 
 
 def shard_path(file_id: str) -> str:
     # Prevent flat directory explosion
-    return os.path.join(UPLOAD_DIR, file_id[:2], file_id[2:4])
+    return os.path.join(settings.UPLOAD_DIR, file_id[:2], file_id[2:4])
 
 
 def ensure_dir(path: str) -> None:
@@ -26,17 +26,6 @@ def build_paths(file_id: str) -> tuple[str, str]:
     temp_path = final_path + ".tmp"
 
     return temp_path, final_path
-
-
-def validate_file(file: UploadFile, expiry_date: datetime) -> None:
-    if not file:
-        raise HTTPException(400, "File not provided")
-
-    if expiry_date.tzinfo is None:
-        raise HTTPException(400, "TimeZone info not provided")
-
-    if expiry_date <= datetime.now(timezone.utc):
-        raise HTTPException(400, "Expiry must be in future")
 
 
 def safe_delete(path: str) -> None:
@@ -55,9 +44,10 @@ async def stream_to_disk(upload: UploadFile, temp_path: str) -> int:
                 break
             total_size += len(chunk)
 
-            if total_size > MAX_FILE_SIZE:
+            if total_size > settings.MAX_UPLOAD_SIZE:
                 raise HTTPException(
-                    413, f"File Too Large: size limit `{MAX_FILE_SIZE} Bytes`"
+                    413,
+                    f"File Too Large: size limit `{settings.MAX_UPLOAD_SIZE} Bytes`",
                 )
 
             await f.write(chunk)

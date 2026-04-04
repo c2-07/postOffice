@@ -16,10 +16,9 @@ class File(SQLModel, table=True):
 
     @property
     def expired(self) -> bool:
-        if (
-            self.expiry_date is not None
-            and datetime.now(timezone.utc) > self.expiry_date
-        ):
+        if self.expiry_date is not None and datetime.now(
+            timezone.utc
+        ) > self.expiry_date.astimezone(timezone.utc):
             return True
         return False
 
