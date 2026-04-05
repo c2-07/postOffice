@@ -15,9 +15,11 @@ api_router.include_router(routes_crud.router)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    init_db()
+    """Handles startup and shutdown events for the application."""
+    init_db()  # Initialize database tables on startup
     yield
 
 
 app = FastAPI(title="PostOffice API", lifespan=lifespan)
+# Register the combined API router with all sub-routes
 app.include_router(api_router)

@@ -15,6 +15,16 @@ router = APIRouter(tags=["Download File"])
 async def download_file(
     id: Annotated[UUID, Query()], session: Session = Depends(get_session)
 ):
+    """
+    Downloads a file by its unique identifier.
+
+    Args:
+        id: The UUID of the file to download.
+        session: Database session injected via dependency.
+
+    Returns:
+        FileResponse: The actual file content.
+    """
     file_service = FileService(session)
     filename, path = file_service.download(file_id=id)
     return FileResponse(

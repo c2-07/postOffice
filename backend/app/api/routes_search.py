@@ -3,7 +3,7 @@ from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlmodel import Session, select
+from sqlmodel import Session
 
 from app.database import get_session
 from app.model import File, User
@@ -17,25 +17,39 @@ router = APIRouter(tags=["Search"])
 async def search_file(
     id: Annotated[UUID, Query()], session: Session = Depends(get_session)
 ):
-    result = session.get(File, id)
+    """
+    Search for file metadata by its ID.
 
-    if result is None:
+    Args:
+        id: The UUID of the file to search for.
+        session: Database session.
+    """
+    record = session.get(File, id)
+
+    if record is None:
         logging.info("No Match Found.")
         raise HTTPException(404, "Match Not Found")
 
-    logger.info(result)
-    return {"message": "Match Found.", "result": result}
+    logger.info(record)
+    return {"message": "Match Found", "result": record}
 
 
 @router.get("/search/user")
 async def search_user(
     id: Annotated[UUID, Query()], session: Session = Depends(get_session)
 ):
-    result = session.get(User, id)
+    """
+    Search for user information by their ID.
 
-    if result is None:
+    Args:
+        id: The UUID of the user to search for.
+        session: Database session.
+    """
+    record = session.get(User, id)
+
+    if record is None:
         logging.info("No Match Found.")
         raise HTTPException(404, "Match Not Found")
 
-    logger.info(result)
-    return {"message": "Match Found.", "result": result}
+    logger.info(record)
+    return {"message": "Match Found", "result": record}

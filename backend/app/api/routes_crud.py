@@ -9,6 +9,12 @@ router = APIRouter()
 
 @router.get("/list")
 async def list_db(session: Session = Depends(get_session)):
+    """
+    Returns a list of all files in the database.
+
+    Args:
+        session: Database session.
+    """
     statement = select(File)
     result = session.exec(statement).all()
     return {"results": result}
