@@ -50,3 +50,4 @@ class User(SQLModel, table=True):
     )
     username: str = Field(unique=True, description="Unique display name for the user")
     email: EmailStr = Field(unique=True, description="Validated unique email address")
+    hashed_password: str

@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import APIRouter, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import routes_crud, routes_download, routes_search, routes_upload
 from app.database import init_db
@@ -21,5 +22,22 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="PostOffice API", lifespan=lifespan)
+
+origins = [
+    "http://localhost.com",
+    "https://localhost.com",
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+# Allow Frontend to talk to Backend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Register the combined API router with all sub-routes
 app.include_router(api_router)
