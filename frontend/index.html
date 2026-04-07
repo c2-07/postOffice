@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostOffice API</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="brand" href="#home">POSTOFFICE</a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#team">Team</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="signin.html">Sign In</a>
+        <a class="btn btn-solid" href="upload.html">Upload</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="home">
+    <section class="hero section container reveal">
+      <div class="pixel-dot"></div>
+      <p class="kicker">SELF HOSTED • FAST • SIMPLE</p>
+      <h1>SHIP FILES TO YOUR API LIKE IT'S 1998</h1>
+      <p class="hero-copy">
+        PostOffice is a backend-first upload and file delivery API. Push assets,
+        scan metadata, and serve reliable links from one place.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="upload.html">Start Uploading</a>
+        <a class="btn btn-ghost" href="#features">Explore Features</a>
+      </div>
+      <div class="hero-strip" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </section>
+
+    <section id="features" class="section section-muted reveal">
+      <div class="container">
+        <h2>POWER-UPS</h2>
+        <p class="section-copy">Everything you need to run your file workflow through one backend API.</p>
+
+        <div class="feature-grid">
+          <article class="card">
+            <h3>LIGHTNING FAST</h3>
+            <p>Optimized endpoints for upload, search, and download with low latency responses.</p>
+          </article>
+          <article class="card">
+            <h3>SECURE BY DEFAULT</h3>
+            <p>Token auth and restricted routes keep your uploads private and predictable.</p>
+          </article>
+          <article class="card">
+            <h3>EASY INTEGRATION</h3>
+            <p>Use plain HTTP requests from your app, scripts, or CLI in minutes.</p>
+          </article>
+          <article class="card">
+            <h3>SEARCH READY</h3>
+            <p>Find files quickly with metadata-aware endpoints for clean retrieval workflows.</p>
+          </article>
+          <article class="card">
+            <h3>DEV-FIRST DX</h3>
+            <p>Simple route structure and readable responses make debugging and testing easier.</p>
+          </article>
+          <article class="card">
+            <h3>SCALABLE STORAGE</h3>
+            <p>Start local, then extend to object storage when traffic and files grow.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="team" class="section container reveal">
+      <h2>CREW MEMBERS</h2>
+      <p class="section-copy">The people behind PostOffice API.</p>
+
+      <div class="team-grid">
+        <article class="member">
+          <div class="avatar">GM</div>
+          <h3>Gourav Meena</h3>
+          <p>Lead Frontend &amp; Backend Engineer</p>
+        </article>
+        <article class="member">
+          <div class="avatar">MS</div>
+          <h3>Mahesh Solanke</h3>
+          <p>Frontend Designer &amp; Backend Engineer</p>
+        </article>
+        <article class="member">
+          <div class="avatar">ST</div>
+          <h3>Saptrishi Thete</h3>
+          <p>Frontend &amp; Backend Engineer</p>
+        </article>
+        <article class="member">
+          <div class="avatar">PS</div>
+          <h3>Prithvi Singh</h3>
+          <p>Frontend &amp; Backend Engineer</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>POSTOFFICE</p>
+      <p>Upload. Index. Deliver.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

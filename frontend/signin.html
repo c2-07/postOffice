@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostOffice - Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="brand" href="index.html">POSTOFFICE</a>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="index.html">Home</a>
+        <a class="btn btn-solid" href="upload.html">Upload</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="section container reveal auth-page">
+    <h2>SIGN IN</h2>
+    <p class="section-copy">Enter your account credentials to access your API dashboard.</p>
+
+    <form class="auth-card" action="#" method="post">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" placeholder="you@example.com" required>
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" placeholder="********" required>
+
+      <button class="btn btn-solid" type="submit">Sign In</button>
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
