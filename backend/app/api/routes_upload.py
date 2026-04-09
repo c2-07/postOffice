@@ -40,5 +40,6 @@ async def upload_file(
     file_link = f"{settings.FRONTEND_BASE_URL}/open-link.html?file={file_id}"
     return {
         "message": "File successfully uploaded to the server",
+        "file_id": str(file_id),
         "file_page_url": file_link,
     }

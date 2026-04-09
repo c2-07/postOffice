@@ -20,7 +20,7 @@ from app.storage.localstorage import LocalStorageProvider
 class FileService:
     """Service layer for handling file-related business logic."""
 
-    CHUNK_SIZE = 1024 * 1024  # 1 MB
+    CHUNK_SIZE = 1024 * 1024 * 10 # 1 MB
     PBKDF2_ITERATIONS = 200_000
 
     def __init__(self, session: Session):
