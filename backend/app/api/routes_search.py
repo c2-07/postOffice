@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlmodel import Session
 
 from app.database import get_session
-from app.model import File, User
+from app.model import File
 
 logger = logging.getLogger(__name__)
 
@@ -31,25 +31,18 @@ async def search_file(
         raise HTTPException(404, "Match Not Found")
 
     logger.info(record)
-    return {"message": "Match Found", "result": record}
-
-
-@router.get("/search/user")
-async def search_user(
-    id: Annotated[UUID, Query()], session: Session = Depends(get_session)
-):
-    """
-    Search for user information by their ID.
-
-    Args:
-        id: The UUID of the user to search for.
-        session: Database session.
-    """
-    record = session.get(User, id)
-
-    if record is None:
-        logging.info("No Match Found.")
-        raise HTTPException(404, "Match Not Found")
-
-    logger.info(record)
-    return {"message": "Match Found", "result": record}
+    return {
+        "message": "Match Found",
+        "result": {
+            "id": record.id,
+            "filename": record.filename,
+            "filesize": record.filesize,
+            "content_type": record.content_type,
+            "created_on": record.created_on,
+            "expiry_date": record.expiry_date,
+            "is_expired": record.expired,
+            "is_deleted": record.is_deleted,
+            "uploaded_by": record.uploaded_by,
+            "has_password": record.has_password,
+        },
+    }

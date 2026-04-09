@@ -1,14 +1,12 @@
 from datetime import datetime, timezone
 
-# from typing import List
 from uuid import UUID, uuid4
 
-from pydantic import EmailStr
 from sqlmodel import Field, SQLModel
 
 
 class File(SQLModel, table=True):
-    """Represents a file uploaded to the system with its metadata and ownership."""
+    """Represents a file uploaded to the system with metadata."""
 
     __tablename__ = "files"
     id: UUID = Field(
@@ -23,31 +21,30 @@ class File(SQLModel, table=True):
     expiry_date: datetime | None = Field(
         description="Optional timestamp after which the file is considered expired"
     )
-    owner_id: UUID = Field(
+    uploaded_by: str | None = Field(
         default=None,
-        foreign_key="users.id",
-        description="ID of the user who owns this file",
+        description="Optional uploader name for preview display",
     )
+    password_hash: str | None = Field(
+        default=None,
+        description="Optional password hash required for download",
+    )
+    is_expired: bool = Field(default=False)
+    expired_on: datetime | None = Field(default=None)
+    is_deleted: bool = Field(default=False)
+    deleted_on: datetime | None = Field(default=None)
+
+    @property
+    def has_password(self) -> bool:
+        return bool(self.password_hash)
 
     @property
     def expired(self) -> bool:
         """Checks if the file has passed its expiry date."""
+        if self.is_expired:
+            return True
         if self.expiry_date is not None and datetime.now(
             timezone.utc
         ) > self.expiry_date.astimezone(timezone.utc):
             return True
         return False
-
-
-class User(SQLModel, table=True):
-    """Represents a registered user in the system."""
-
-    __tablename__ = "users"
-    id: UUID = Field(
-        default_factory=uuid4,
-        primary_key=True,
-        description="Unique identifier for the user",
-    )
-    username: str = Field(unique=True, description="Unique display name for the user")
-    email: EmailStr = Field(unique=True, description="Validated unique email address")
-    hashed_password: str

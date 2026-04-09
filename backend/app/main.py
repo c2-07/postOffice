@@ -1,10 +1,12 @@
 from contextlib import asynccontextmanager
+import asyncio
 
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import routes_crud, routes_download, routes_search, routes_upload
 from app.database import init_db
+from app.worker import cleanup_expired_files_loop
 
 api_router = APIRouter()
 
@@ -18,23 +20,18 @@ api_router.include_router(routes_crud.router)
 async def lifespan(app: FastAPI):
     """Handles startup and shutdown events for the application."""
     init_db()  # Initialize database tables on startup
+    cleanup_task = asyncio.create_task(cleanup_expired_files_loop())
     yield
+    cleanup_task.cancel()
 
 
 app = FastAPI(title="PostOffice API", lifespan=lifespan)
 
-origins = [
-    "http://localhost.com",
-    "https://localhost.com",
-    "http://localhost",
-    "http://localhost:8080",
-]
-
 # Allow Frontend to talk to Backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

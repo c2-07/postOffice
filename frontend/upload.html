@@ -17,7 +17,7 @@
       <a class="brand" href="index.html">POSTOFFICE</a>
       <div class="nav-actions">
         <a class="btn btn-ghost" href="index.html">Home</a>
-        <a class="btn btn-ghost" href="signin.html">Sign In</a>
+        <a class="btn btn-ghost" href="open-link.html">Open Link</a>
       </div>
     </nav>
   </header>
@@ -26,13 +26,16 @@
     <h2>UPLOAD FILE</h2>
     <p class="section-copy">Drop a file and send it to your backend upload endpoint.</p>
 
-    <form class="auth-card" action="#" method="post" enctype="multipart/form-data">
+    <form class="auth-card" id="upload-form" action="#" method="post" enctype="multipart/form-data">
       <label for="file">Choose File</label>
       <div class="file-picker">
         <input class="file-input" id="file" name="file" type="file" required>
         <label class="file-trigger" for="file">Choose File</label>
         <span class="file-name" id="file-name">No file selected</span>
       </div>
+
+      <label for="uploadedBy">Uploader Name (Optional)</label>
+      <input id="uploadedBy" name="uploadedBy" type="text" placeholder="Gourav Meena">
 
       <label for="expiryAt" class="meta-label">
         <span class="meta-icon" aria-hidden="true">
@@ -50,12 +53,12 @@
         <button class="preset-btn" type="button" data-custom="true">CUSTOM</button>
       </div>
       <div class="expiry-grid">
-        <input id="expiryAt" name="expiryAt" type="datetime-local" required>
+        <input id="expiryAt" type="datetime-local" required>
         <select id="timezone" name="timezone" aria-label="Timezone">
-          <option value="UTC">UTC</option>
-          <option value="Asia/Kolkata">Asia/Kolkata</option>
-          <option value="America/New_York">America/New_York</option>
-          <option value="Europe/London">Europe/London</option>
+          <option value="+00:00">UTC</option>
+          <option value="+05:30">Asia/Kolkata (UTC+05:30)</option>
+          <option value="-04:00">America/New_York (UTC-04:00)</option>
+          <option value="+01:00">Europe/London (UTC+01:00)</option>
         </select>
       </div>
 
@@ -71,6 +74,18 @@
       <input id="password" name="password" type="password" placeholder="Set password to lock this file">
 
       <button class="btn btn-solid" type="submit">Upload Now</button>
+
+      <div class="status-box" id="upload-status" hidden></div>
+
+      <div class="result-box" id="upload-result" hidden>
+        <p>File uploaded. Share page is ready.</p>
+        <input id="result-file-link-input" type="text" readonly aria-label="Uploaded file page link">
+        <div class="result-actions">
+          <button class="btn btn-ghost" id="result-copy-link" type="button">Copy Link</button>
+          <a class="btn btn-solid" id="result-open-page" href="#" target="_blank" rel="noopener">Open File Page</a>
+        </div>
+        <span id="result-file-link" hidden></span>
+      </div>
     </form>
   </main>
 

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostOffice - Open File Link</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="brand" href="index.html">POSTOFFICE</a>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="index.html">Home</a>
+        <a class="btn btn-solid" href="upload.html">Upload</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="section container reveal auth-page">
+    <h2>OPEN FILE LINK</h2>
+    <p class="section-copy">Paste a file link or file ID to view file details before downloading.</p>
+
+    <form class="auth-card" id="link-form" action="#" method="post">
+      <label for="fileRef">File Link or ID</label>
+      <input id="fileRef" name="fileRef" type="text" placeholder="http://localhost:8000/files/<id> or <id>" required>
+
+      <label for="filePassword">Password (Optional)</label>
+      <input id="filePassword" name="filePassword" type="password" placeholder="Only if file is protected">
+
+      <button class="btn btn-solid" type="submit">Show Metadata</button>
+
+      <div class="status-box" id="link-status" hidden></div>
+
+      <div class="result-box" id="link-result" hidden>
+        <p><strong>Filename:</strong> <span id="preview-filename">-</span></p>
+        <p><strong>Uploaded By:</strong> <span id="preview-uploader">-</span></p>
+        <p><strong>Content Type:</strong> <span id="preview-type">-</span></p>
+        <p><strong>Size (bytes):</strong> <span id="preview-size">-</span></p>
+        <p><strong>Expires At:</strong> <span id="preview-expiry">-</span></p>
+        <p><strong>Status:</strong> <span id="preview-status">-</span></p>
+        <a class="btn btn-solid" id="preview-download" href="#" target="_blank" rel="noopener">Download File</a>
+      </div>
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
