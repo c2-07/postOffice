@@ -1,288 +1,239 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PostOffice API</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
-            rel="stylesheet"
-        />
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
-        <div class="grain" aria-hidden="true"></div>
 
-        <header class="site-header">
-            <nav class="nav container">
-                <a class="brand" href="#home">POSTOFFICE</a>
-                <ul class="nav-links"></ul>
-                <div class="nav-actions">
-                    <a class="btn btn-ghost" href="open-link.html">Open Link</a>
-                    <a class="btn btn-solid" href="upload.html">Upload</a>
-                </div>
-            </nav>
-        </header>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PostOffice API</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
 
-        <main id="home">
-            <section class="hero section container reveal">
-                <div class="hero-birds" aria-hidden="true">
-                    <svg class="bird bird-1" viewBox="0 0 24 12" fill="none">
-                        <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges"></path>
-                    </svg>
-                    <svg class="bird bird-2" viewBox="0 0 24 12" fill="none">
-                        <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges"></path>
-                    </svg>
-                    <svg class="bird bird-3" viewBox="0 0 24 12" fill="none">
-                        <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges"></path>
-                    </svg>
-                    <svg class="bird bird-4" viewBox="0 0 24 12" fill="none">
-                        <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges"></path>
-                    </svg>
-                    <svg class="bird bird-5" viewBox="0 0 24 12" fill="none">
-                        <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges"></path>
-                    </svg>
-                    <svg class="bird bird-6" viewBox="0 0 24 12" fill="none">
-                        <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges"></path>
-                    </svg>
-                    <svg class="bird bird-7" viewBox="0 0 24 12" fill="none">
-                        <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges"></path>
-                    </svg>
-                    <svg class="bird bird-8" viewBox="0 0 24 12" fill="none">
-                        <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges"></path>
-                    </svg>
-                </div>
-                <p class="kicker">SELF HOSTED • FAST • SIMPLE</p>
-                <h1>SHIP FILES TO YOUR API</h1>
-                <p class="hero-copy">
-                    Upload once, share secure links, and preview file metadata
-                    before download.
-                </p>
-                <div class="hero-actions">
-                    <a class="btn btn-solid btn-with-icon" href="upload.html">
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                        >
-                            <path d="M12 3v12"></path>
-                            <path d="m7 10 5-7 5 7"></path>
-                            <path d="M4 21h16"></path>
-                        </svg>
-                        <span>Start Uploading</span>
-                    </a>
-                    <a class="btn btn-ghost btn-with-icon" href="#features">
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                        >
-                            <path d="M5 12h14"></path>
-                            <path d="m12 5 7 7-7 7"></path>
-                        </svg>
-                        <span>Explore Features</span>
-                    </a>
-                </div>
-            </section>
+<body>
+    <div class="grain" aria-hidden="true"></div>
 
-            <section id="features" class="section section-muted reveal">
-                <div class="container">
-                    <h2>POWER-UPS</h2>
-                    <p class="section-copy">
-                        Everything you need to run your file workflow through
-                        one backend API.
-                    </p>
-
-                    <div class="feature-grid">
-                        <article class="card feature-compact">
-                            <div class="icon-tile" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
-                                    <path d="M13 2 5 13h6l-1 9 9-12h-6l0-8Z"></path>
-                                </svg>
-                            </div>
-                            <h3>LIGHTNING FAST</h3>
-                            <p>
-                                Optimized endpoints for upload, search, and
-                                download with low latency responses.
-                            </p>
-                        </article>
-                        <article class="card feature-compact">
-                            <div class="icon-tile" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
-                                    <rect x="4" y="11" width="16" height="10"></rect>
-                                    <path d="M8 11V8a4 4 0 0 1 8 0v3"></path>
-                                </svg>
-                            </div>
-                            <h3>SECURE</h3>
-                            <p>
-                                Password-protected links and expiry controls keep
-                                files private and safe.
-                            </p>
-                        </article>
-                        <article class="card feature-compact">
-                            <div class="icon-tile" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
-                                    <path d="m8 8-4 4 4 4"></path>
-                                    <path d="m16 8 4 4-4 4"></path>
-                                    <path d="m14 5-4 14"></path>
-                                </svg>
-                            </div>
-                            <h3>EASY TO USE</h3>
-                            <p>
-                                Simple upload and download flow with clean links
-                                and clear metadata preview.
-                            </p>
-                        </article>
-                    </div>
-                </div>
-            </section>
-
-            <section id="team" class="section container reveal">
-                <h2>CREW MEMBERS</h2>
-                <p class="section-copy">The people behind PostOffice API.</p>
-
-                <div class="team-grid">
-                    <article class="member">
-                        <div class="member-media">
-                            <img
-                                class="member-photo"
-                                src="https://via.placeholder.com/160x160.png?text=GM"
-                                alt="Gourav Meena placeholder photo"
-                            />
-                        </div>
-                        <div class="member-content">
-                            <h3>Gourav Meena</h3>
-                            <p>Lead Frontend &amp; Backend Engineer</p>
-                            <p class="member-meta">
-                                Branch: CSE B • Year: First Year
-                            </p>
-                            <div class="social-row">
-                                <a href="#" target="_blank" rel="noopener"
-                                    >LinkedIn</a
-                                >
-                                <a href="#" target="_blank" rel="noopener"
-                                    >GitHub</a
-                                >
-                                <a href="#" target="_blank" rel="noopener"
-                                    >Instagram</a
-                                >
-                                <a href="#" target="_blank" rel="noopener"
-                                    >Twitter</a
-                                >
-                            </div>
-                        </div>
-                    </article>
-                    <article class="member">
-                        <div class="member-media">
-                            <img
-                                class="member-photo"
-                                src="https://via.placeholder.com/160x160.png?text=MS"
-                                alt="Mahesh Solanke placeholder photo"
-                            />
-                        </div>
-                        <div class="member-content">
-                            <h3>Mahesh Solanke</h3>
-                            <p>Frontend Designer &amp; Backend Engineer</p>
-                            <p class="member-meta">
-                                Branch: CSE B • Year: First Year
-                            </p>
-                            <div class="social-row">
-                                <a href="#" target="_blank" rel="noopener"
-                                    >LinkedIn</a
-                                >
-                                <a href="#" target="_blank" rel="noopener"
-                                    >GitHub</a
-                                >
-                                <a href="#" target="_blank" rel="noopener"
-                                    >Instagram</a
-                                >
-                                <a href="#" target="_blank" rel="noopener"
-                                    >Twitter</a
-                                >
-                            </div>
-                        </div>
-                    </article>
-                    <article class="member">
-                        <div class="member-media">
-                            <img
-                                class="member-photo"
-                                src="https://via.placeholder.com/160x160.png?text=ST"
-                                alt="Saptrishi Thete placeholder photo"
-                            />
-                        </div>
-                        <div class="member-content">
-                            <h3>Saptrishi Thete</h3>
-                            <p>Frontend &amp; Backend Engineer</p>
-                            <p class="member-meta">
-                                Branch: CSE B • Year: First Year
-                            </p>
-                            <div class="social-row">
-                                <a href="#" target="_blank" rel="noopener"
-                                    >LinkedIn</a
-                                >
-                                <a href="#" target="_blank" rel="noopener"
-                                    >GitHub</a
-                                >
-                                <a href="#" target="_blank" rel="noopener"
-                                    >Instagram</a
-                                >
-                                <a href="#" target="_blank" rel="noopener"
-                                    >Twitter</a
-                                >
-                            </div>
-                        </div>
-                    </article>
-                    <article class="member">
-                        <div class="member-media">
-                            <img
-                                class="member-photo"
-                                src="https://via.placeholder.com/160x160.png?text=PS"
-                                alt="Prithvi Singh placeholder photo"
-                            />
-                        </div>
-                        <div class="member-content">
-                            <h3>Prithvi Singh</h3>
-                            <p>Frontend &amp; Backend Engineer</p>
-                            <p class="member-meta">
-                                Branch: CSE B • Year: First Year
-                            </p>
-                            <div class="social-row">
-                                <a href="#" target="_blank" rel="noopener"
-                                    >LinkedIn</a
-                                >
-                                <a href="#" target="_blank" rel="noopener"
-                                    >GitHub</a
-                                >
-                                <a href="#" target="_blank" rel="noopener"
-                                    >Instagram</a
-                                >
-                                <a href="#" target="_blank" rel="noopener"
-                                    >Twitter</a
-                                >
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </section>
-        </main>
-
-        <footer class="site-footer">
-            <div class="container footer-inner">
-                <p>POSTOFFICE</p>
-                <p>Upload. Index. Deliver.</p>
+    <header class="site-header">
+        <nav class="nav container">
+            <a class="brand" href="#home">POSTOFFICE</a>
+            <ul class="nav-links"></ul>
+            <div class="nav-actions">
+                <a class="btn btn-ghost" href="open-link.html">Open Link</a>
+                <a class="btn btn-solid" href="upload.html">Upload</a>
             </div>
-        </footer>
+        </nav>
+    </header>
 
-        <script src="script.js"></script>
-    </body>
+    <main id="home">
+        <section class="hero section container reveal">
+            <div class="hero-birds" aria-hidden="true">
+                <svg class="bird bird-1" viewBox="0 0 24 12" fill="none">
+                    <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges">
+                    </path>
+                </svg>
+                <svg class="bird bird-2" viewBox="0 0 24 12" fill="none">
+                    <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges">
+                    </path>
+                </svg>
+                <svg class="bird bird-3" viewBox="0 0 24 12" fill="none">
+                    <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges">
+                    </path>
+                </svg>
+                <svg class="bird bird-4" viewBox="0 0 24 12" fill="none">
+                    <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges">
+                    </path>
+                </svg>
+                <svg class="bird bird-5" viewBox="0 0 24 12" fill="none">
+                    <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges">
+                    </path>
+                </svg>
+                <svg class="bird bird-6" viewBox="0 0 24 12" fill="none">
+                    <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges">
+                    </path>
+                </svg>
+                <svg class="bird bird-7" viewBox="0 0 24 12" fill="none">
+                    <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges">
+                    </path>
+                </svg>
+                <svg class="bird bird-8" viewBox="0 0 24 12" fill="none">
+                    <path d="M2 10L12 2L22 10" stroke="currentColor" stroke-width="2" shape-rendering="crispEdges">
+                    </path>
+                </svg>
+            </div>
+            <p class="kicker">SELF HOSTED • FAST • SIMPLE</p>
+            <h1>SHIP FILES TO YOUR API</h1>
+            <p class="hero-copy">
+                Upload once, share secure links, and preview file metadata
+                before download.
+            </p>
+            <div class="hero-actions">
+                <a class="btn btn-solid btn-with-icon" href="upload.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 3v12"></path>
+                        <path d="m7 10 5-7 5 7"></path>
+                        <path d="M4 21h16"></path>
+                    </svg>
+                    <span>Start Uploading</span>
+                </a>
+                <a class="btn btn-ghost btn-with-icon" href="#features">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                    <span>Explore Features</span>
+                </a>
+            </div>
+        </section>
+
+        <section id="features" class="section section-muted reveal">
+            <div class="container">
+                <h2>POWER-UPS</h2>
+                <p class="section-copy">
+                    Everything you need to run your file workflow through
+                    one backend API.
+                </p>
+
+                <div class="feature-grid">
+                    <article class="card feature-compact">
+                        <div class="icon-tile" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="square" stroke-linejoin="miter">
+                                <path d="M13 2 5 13h6l-1 9 9-12h-6l0-8Z"></path>
+                            </svg>
+                        </div>
+                        <h3>LIGHTNING FAST</h3>
+                        <p>
+                            Optimized endpoints for upload, search, and
+                            download with low latency responses.
+                        </p>
+                    </article>
+                    <article class="card feature-compact">
+                        <div class="icon-tile" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="square" stroke-linejoin="miter">
+                                <rect x="4" y="11" width="16" height="10"></rect>
+                                <path d="M8 11V8a4 4 0 0 1 8 0v3"></path>
+                            </svg>
+                        </div>
+                        <h3>SECURE</h3>
+                        <p>
+                            Password-protected links and expiry controls
+                            keep files private and safe.
+                        </p>
+                    </article>
+                    <article class="card feature-compact">
+                        <div class="icon-tile" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="square" stroke-linejoin="miter">
+                                <path d="m8 8-4 4 4 4"></path>
+                                <path d="m16 8 4 4-4 4"></path>
+                                <path d="m14 5-4 14"></path>
+                            </svg>
+                        </div>
+                        <h3>EASY TO USE</h3>
+                        <p>
+                            Simple upload and download flow with clean links
+                            and clear metadata preview.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" class="section container reveal">
+            <h2>CREW MEMBERS</h2>
+            <p class="section-copy">The people behind PostOffice API.</p>
+
+            <div class="team-grid">
+                <article class="member">
+                    <div class="member-media">
+                        <img class="member-photo"
+                            src="https://lh3.googleusercontent.com/pw/AP1GczPCgHTGikFyHl9ysU7hDY4d6B24h8_KWgKHtUWTRyvQ_mrqO0KipE0VMSlzlS6Z0b0-4MdZf4oFEkVq_u8oCuLTDiECDjDjsP2EiHkuPMMnjfp9q1k=w2400"
+                            alt="Gourav Meena placeholder photo" />
+                    </div>
+                    <div class="member-content">
+                        <h3>Gourav Meena</h3>
+                        <p>Lead Frontend &amp; Backend Engineer</p>
+                        <p class="member-meta">
+                            Branch: CSE B • Year: First Year
+                        </p>
+                        <div class="social-row">
+                            <a href="https://www.linkedin.com/in/gouravjareda/" target="_blank"
+                                rel="noopener">LinkedIn</a>
+                            <a href="https://github.com/c2-07" target="_blank" rel="noopener">GitHub</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="member">
+                    <div class="member-media">
+                        <img class="member-photo"
+                            src="https://lh3.googleusercontent.com/pw/AP1GczPG2N9DjPO05tw_sogVa5-6vhx12c6QKpXJqusO5VhpyonjUF6IBjR0Ds0e_sRhn10kDOdrrVl32GeSLMPnP1A3IjzGS1xYJq_cgfAAqsp7OLBUQcsw=w2400"
+                            alt="Mahesh Solanke placeholder photo" />
+                    </div>
+                    <div class="member-content">
+                        <h3>Mahesh Solanke</h3>
+                        <p>Frontend Designer &amp; Backend Engineer</p>
+                        <p class="member-meta">
+                            Branch: CSE B • Year: First Year
+                        </p>
+                        <div class="social-row">
+                            <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+                            <a href="#" target="_blank" rel="noopener">GitHub</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="member">
+                    <div class="member-media">
+                        <img class="member-photo"
+                            src="https://lh3.googleusercontent.com/pw/AP1GczPbROX2h2msiuBFtXb2X_dx4DmND3DA1YjefMt9zK9jE5sevFrPInzr8MRlejtOv7DPDufTj1KakNbRudfXDNH3nGkSBSDDUzjQRcugAiOqBFs3PLHn=w2400"
+                            alt="Saptrishi Thete placeholder photo" />
+                    </div>
+                    <div class="member-content">
+                        <h3>Saptrishi Thete</h3>
+                        <p>Frontend Engineer</p>
+                        <p class="member-meta">
+                            Branch: CSE B • Year: First Year
+                        </p>
+                        <div class="social-row">
+                            <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+                            <a href="#" target="_blank" rel="noopener">GitHub</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="member">
+                    <div class="member-media">
+                        <img class="member-photo"
+                            src="https://lh3.googleusercontent.com/pw/AP1GczOy_YvHrrCJZWef35Nfvjy_1ngnO_wILy2RMptvLgVzswLBz4K0kdc3XUQMLTJV5FMDLb_4dwib0nUIOnaCmqLBTajJv6MOKVd4kkVvD9KG_dbptX4=w2400"
+                            alt="Prithvi Singh placeholder photo" />
+                    </div>
+                    <div class="member-content">
+                        <h3>Prithvi Singh</h3>
+                        <p>Frontend Engineer</p>
+                        <p class="member-meta">
+                            Branch: CSE B • Year: First Year
+                        </p>
+                        <div class="social-row">
+                            <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+                            <a href="#" target="_blank" rel="noopener">GitHub</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>POSTOFFICE</p>
+            <p>Upload. Index. Deliver.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
 </html>
