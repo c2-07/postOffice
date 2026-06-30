@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://queen-assessed-manual-wagon.trycloudflare.com/api/:path*"
-    }
-  ]
-}
