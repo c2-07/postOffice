@@ -1,4 +1,3 @@
-import os
 from datetime import datetime, timezone
 from typing import Annotated
 from uuid import UUID, uuid4
@@ -86,16 +85,7 @@ class File(SQLModel, table=True):
 
     @property
     def storage_key(self) -> str:
-        if not settings.UPLOAD_DIR:
-            raise ValueError("UPLOAD_DIR is not set in settings")
-
-        if not os.path.exists(settings.UPLOAD_DIR):
-            os.makedirs(settings.UPLOAD_DIR)
-
-        return os.path.join(
-            settings.UPLOAD_DIR,
-            f"{self.id}.{self.extension}" if self.extension else f"{self.id}",
-        )
+        return f"{self.id}.{self.extension}" if self.extension else f"{self.id}"
 
     @property
     def has_password(self) -> bool:
