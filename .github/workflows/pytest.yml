@@ -4,6 +4,9 @@ name: Run Pytest
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 # A workflow can have multiple independent jobs. Each job gets a fresh VM.
 jobs:
   test:
