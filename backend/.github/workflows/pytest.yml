@@ -3,12 +3,12 @@ name: Run Pytest
 # Triggers the workflow on push or pull request events for the main branch
 on:
   push:
-    branches: ["main"]
+    branches: ["v2"]
   pull_request:
-    branches: ["main"]
+    branches: ["v2"]
 
   workflow_dispatch:
-    branches: ["main"]
+    branches: ["v2"]
 
 # A workflow can have multiple independent jobs. Each job gets a fresh VM.
 jobs:
