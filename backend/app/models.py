@@ -57,7 +57,7 @@ class File(SQLModel, table=True):
 
     __tablename__ = "files"
 
-    id: FileID = Field(primary_key=True, default_factory=uuid4)
+    id: FileID = Field(primary_key=True, index=True, default_factory=uuid4)
 
     filename: Filename = None
     filesize: Filesize = None

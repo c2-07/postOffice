@@ -21,6 +21,6 @@ python=".venv"
 [tool.pytest.ini_options]
 pythonpath = ["."]
 addopts = [
-    # "-q",                             # quiet output
+    "-q",                             # quiet output
     "--import-mode=importlib"         # safer import strategy
 ]
