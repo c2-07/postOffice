@@ -31,10 +31,10 @@ async def get_file(service: FileServiceDeps, id: UUID):
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-async def upload_file(service: FileServiceDeps, file_upload: UploadFile):
+async def upload_file(service: FileServiceDeps, file: UploadFile):
     try:
-        uploaded_file = await service.upload_file(file_upload)
-        return uploaded_file
+        response = await service.upload_file(file)
+        return response
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -44,7 +44,6 @@ async def upload_file(service: FileServiceDeps, file_upload: UploadFile):
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_file(service: FileServiceDeps, id: UUID):
-
     try:
         await service.delete_file(id)
     except ValueError:

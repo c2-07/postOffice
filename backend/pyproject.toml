@@ -6,12 +6,21 @@ readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "aiofiles>=25.1.0",
+    "anyio>=4.14.2",
     "fastapi[standard]>=0.139.0",
-    "httpx>=0.28.1",
+    "httpx2>=2.7.0",
     "pytest>=9.1.1",
+    "pytest-depends>=1.0.1",
     "python-magic>=0.4.27",
     "sqlmodel>=0.0.39",
 ]
 
 [tool.ty.environment]
 python=".venv"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+addopts = [
+    # "-q",                             # quiet output
+    "--import-mode=importlib"         # safer import strategy
+]
