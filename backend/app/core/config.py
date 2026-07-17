@@ -2,6 +2,8 @@ from pydantic import Field
 from typing import Annotated
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+__all__ = ["settings"]
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env")
@@ -32,5 +34,3 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-
-__all__ = ["settings"]
