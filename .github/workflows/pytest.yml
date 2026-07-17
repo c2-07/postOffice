@@ -8,14 +8,13 @@ on:
     branches: ["v2"]
 
   workflow_dispatch:
-    branches: ["v2"]
 
 # A workflow can have multiple independent jobs. Each job gets a fresh VM.
 jobs:
-  test: # This is simply the job's ID. It could be anything: like backend-tests or something like that
+  test:
     runs-on: ubuntu-latest
 
-    steps: A list of things to execute in order.
+    steps:
       # Step 1: Download a copy of your code onto the GitHub runner
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,9 +23,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.14" # Change to your preferred Python version
+          python-version: "3.14"
 
-      # Step 3: Upgrade pip and install project dependencies
+      # Step 3: Install uv
       - name: Install uv
         uses: astral-sh/setup-uv@v5
 
