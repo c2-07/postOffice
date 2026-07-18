@@ -4,6 +4,9 @@ name: Run Pytest
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 # A workflow can have multiple independent jobs. Each job gets a fresh VM.
 jobs:
   test:
@@ -25,7 +28,9 @@ jobs:
         uses: astral-sh/setup-uv@v5
 
       - name: Install dependencies
+        working-directory: backend
         run: uv sync
 
       - name: Run tests
-        run: uv run pytest tests/test_files_routes.py
+        working-directory: backend
+        run: uv run pytest tests/test_files.py
