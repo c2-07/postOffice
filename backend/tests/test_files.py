@@ -4,16 +4,21 @@ import tempfile
 import os
 from fastapi.testclient import TestClient
 
-# Assuming your FastAPI app is in app/main.py
 from app.main import app
-
-client = TestClient(app)
+from app.database import init_db
 
 # Shared state for sequential tests (upload → get → delete)
 file_id = None
 
 
-def test_list_files():
+@pytest.fixture(scope="session")
+def client():
+    init_db()
+    with TestClient(app) as c:
+        yield c
+
+
+def test_list_files(client):
     """GET /files/ - List all files"""
     response = client.get("/files/")
     assert response.status_code == 200
@@ -29,7 +34,7 @@ def test_list_files():
         assert isinstance(file.get("is_expired"), bool)
 
 
-def test_upload_file():
+def test_upload_file(client):
     """POST /files/ - Upload a new file"""
     global file_id
 
@@ -58,7 +63,7 @@ def test_upload_file():
 
 
 @pytest.mark.depends(on=["test_upload_file"])
-def test_get_file():
+def test_get_file(client):
     """GET /files/{id} - Retrieve uploaded file"""
     global file_id
     assert file_id is not None, "File ID not set from upload test"
@@ -77,7 +82,7 @@ def test_get_file():
 
 
 @pytest.mark.depends(on=["test_get_file"])
-def test_delete_file():
+def test_delete_file(client):
     """DELETE /files/{id} - Delete uploaded file"""
     global file_id
     assert file_id is not None, "File ID not set from upload test"
@@ -87,7 +92,7 @@ def test_delete_file():
 
 
 @pytest.mark.depends(on=["test_delete_file"])
-def test_file_is_deleted():
+def test_file_is_deleted(client):
     """Verify file is marked as deleted or returns 404"""
     global file_id
     assert file_id is not None
@@ -102,20 +107,20 @@ def test_file_is_deleted():
 
 
 # Negative / Edge cases
-def test_upload_without_file():
+def test_upload_without_file(client):
     """POST /files/ - Validation error when no file is provided"""
     response = client.post("/files/")
     assert response.status_code == 422
 
 
-def test_get_nonexistent_file():
+def test_get_nonexistent_file(client):
     """GET /files/{id} - Non-existent UUID"""
     fake_id = str(uuid.uuid4())
     response = client.get(f"/files/{fake_id}")
     assert response.status_code in (404, 422)
 
 
-def test_delete_nonexistent_file():
+def test_delete_nonexistent_file(client):
     """DELETE /files/{id} - Non-existent UUID"""
     fake_id = str(uuid.uuid4())
     response = client.delete(f"/files/{fake_id}")
