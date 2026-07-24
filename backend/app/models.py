@@ -58,6 +58,7 @@ class File(SQLModel, table=True):
     __tablename__ = "files"
 
     id: FileID = Field(primary_key=True, index=True, default_factory=uuid4)
+    owner_id: UUID | None = Field(default=None, index=True, nullable=True)
 
     filename: Filename = None
     filesize: Filesize = None
@@ -102,3 +103,15 @@ class File(SQLModel, table=True):
             return True
 
         return False
+
+
+class User(SQLModel, table=True):
+    """Represents a registered user in the system."""
+
+    __tablename__ = "users"
+
+    id: UUID = Field(primary_key=True, index=True, default_factory=uuid4)
+    email: str = Field(unique=True, index=True)
+    hashed_password: str
+    role: str = Field(default="user")
+    created_at: datetime = Field(default_factory=utc_now)
