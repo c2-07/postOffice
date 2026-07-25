@@ -1,128 +1,112 @@
-import pytest
-import uuid
-import tempfile
-import os
+from uuid import UUID, uuid4
+
 from fastapi.testclient import TestClient
+from sqlmodel import Session, select
 
-from app.main import app
-from app.database import init_db
-
-# Shared state for sequential tests (upload → get → delete)
-file_id = None
+from app.models import File
 
 
-@pytest.fixture(scope="session")
-def client():
-    init_db()
-    with TestClient(app) as c:
-        yield c
+def upload(client: TestClient, filename: str = "note.txt") -> str:
+    response = client.post(
+        "/files/", files={"file": (filename, b"hello", "text/plain")}
+    )
+    assert response.status_code == 201
+    return response.json()["id"]
 
 
-def test_list_files(client):
-    """GET /files/ - List all files"""
-    response = client.get("/files/")
-    assert response.status_code == 200
-    data = response.json()
-
-    assert isinstance(data, list)
-    for file in data:
-        assert isinstance(file.get("id"), str)
-        assert isinstance(file.get("filename"), str)
-        assert isinstance(file.get("content_type"), str)
-        assert isinstance(file.get("filesize"), int)
-        assert isinstance(file.get("is_deleted"), bool)
-        assert isinstance(file.get("is_expired"), bool)
+def get_file(engine, file_id: str) -> File:
+    with Session(engine) as session:
+        return session.exec(select(File).where(File.id == UUID(file_id))).one()
 
 
-def test_upload_file(client):
-    """POST /files/ - Upload a new file"""
-    global file_id
+def test_all_file_routes_require_authentication(file_client):
+    test_client, _ = file_client
+    file_id = uuid4()
 
-    # Create a temporary test file
-    content = b"This is a test file for the Postoffice API unit tests.\nLine 2."
-    with tempfile.NamedTemporaryFile(suffix=".txt", delete=False) as tmp:
-        tmp.write(content)
-        tmp_path = tmp.name
-        filename = os.path.basename(tmp_path)
+    assert test_client.get("/files/").status_code == 401
+    assert test_client.get(f"/files/{file_id}").status_code == 401
+    response = test_client.post("/files/", files={"file": ("note.txt", b"hello")})
+    assert response.status_code == 401
+    assert test_client.delete(f"/files/{file_id}").status_code == 401
 
-    try:
-        with open(tmp_path, "rb") as f:
-            response = client.post(
-                "/files/", files={"file": (filename, f, "text/plain")}
+
+def test_upload_records_authenticated_owner(as_user, regular_user):
+    test_client, engine = as_user
+
+    file_id = upload(test_client)
+
+    assert get_file(engine, file_id).owner_id == regular_user.id
+
+
+def test_regular_user_lists_only_own_files(as_user, other_user):
+    test_client, engine = as_user
+    own_file_id = upload(test_client, "own.txt")
+    with Session(engine) as session:
+        session.add(
+            File(
+                id=uuid4(),
+                owner_id=other_user.id,
+                filename="other.txt",
+                content_type="text/plain",
+                filesize=5,
             )
+        )
+        session.commit()
 
-        assert response.status_code == 201
-        data = response.json()
-        assert "id" in data
-        assert isinstance(data["id"], str)
+    response = test_client.get("/files/")
 
-        file_id = data["id"]  # Save for subsequent tests
-
-    finally:
-        os.unlink(tmp_path)
-
-
-@pytest.mark.depends(on=["test_upload_file"])
-def test_get_file(client):
-    """GET /files/{id} - Retrieve uploaded file"""
-    global file_id
-    assert file_id is not None, "File ID not set from upload test"
-
-    response = client.get(f"/files/{file_id}")
     assert response.status_code == 200
-
-    # The endpoint might return file content (binary) or metadata (JSON)
-    content_type = response.headers.get("content-type", "")
-    if "application/json" in content_type:
-        data = response.json()
-        assert data.get("id") == file_id
-    else:
-        # Likely serving the file directly
-        assert len(response.content) > 0
+    assert [file["id"] for file in response.json()] == [own_file_id]
 
 
-@pytest.mark.depends(on=["test_get_file"])
-def test_delete_file(client):
-    """DELETE /files/{id} - Delete uploaded file"""
-    global file_id
-    assert file_id is not None, "File ID not set from upload test"
+def test_other_user_cannot_download_or_delete_file(
+    as_other_user, authenticate_as, regular_user, other_user
+):
+    test_client, _ = as_other_user
+    authenticate_as(regular_user)
+    owned_file_id = upload(test_client)
+    authenticate_as(other_user)
 
-    response = client.delete(f"/files/{file_id}")
-    assert response.status_code == 204  # No Content
-
-
-@pytest.mark.depends(on=["test_delete_file"])
-def test_file_is_deleted(client):
-    """Verify file is marked as deleted or returns 404"""
-    global file_id
-    assert file_id is not None
-
-    response = client.get(f"/files/{file_id}")
-    # Either soft-delete (returns metadata with is_deleted=True) or hard-delete (404)
-    if response.status_code == 200:
-        data = response.json()
-        assert data.get("is_deleted") is True
-    else:
-        assert response.status_code == 404
+    assert test_client.get(f"/files/{owned_file_id}").status_code == 404
+    assert test_client.delete(f"/files/{owned_file_id}").status_code == 404
 
 
-# Negative / Edge cases
-def test_upload_without_file(client):
-    """POST /files/ - Validation error when no file is provided"""
-    response = client.post("/files/")
-    assert response.status_code == 422
+def test_superuser_can_list_and_delete_any_file(
+    as_superuser, authenticate_as, regular_user, superuser
+):
+    test_client, _ = as_superuser
+    authenticate_as(regular_user)
+    owned_file_id = upload(test_client)
+    authenticate_as(superuser)
+
+    response = test_client.get("/files/")
+
+    assert response.status_code == 200
+    assert [file["id"] for file in response.json()] == [owned_file_id]
+    assert test_client.delete(f"/files/{owned_file_id}").status_code == 204
 
 
-def test_get_nonexistent_file(client):
-    """GET /files/{id} - Non-existent UUID"""
-    fake_id = str(uuid.uuid4())
-    response = client.get(f"/files/{fake_id}")
-    assert response.status_code in (404, 422)
+def test_unowned_legacy_files_are_superuser_only(
+    as_user, tmp_path, authenticate_as, superuser
+):
+    test_client, engine = as_user
+    legacy_file = File(
+        id=uuid4(),
+        filename="legacy.txt",
+        content_type="text/plain",
+        filesize=6,
+    )
+    legacy_file_id = str(legacy_file.id)
+    with Session(engine) as session:
+        session.add(legacy_file)
+        session.commit()
+    (tmp_path / "uploads").mkdir()
+    (tmp_path / "uploads" / f"{legacy_file_id}.txt").write_bytes(b"legacy")
 
-
-def test_delete_nonexistent_file(client):
-    """DELETE /files/{id} - Non-existent UUID"""
-    fake_id = str(uuid.uuid4())
-    response = client.delete(f"/files/{fake_id}")
-    # Many APIs return 204 for delete (idempotent) or 404
-    assert response.status_code in (204, 404)
+    assert test_client.get("/files/").json() == []
+    assert test_client.get(f"/files/{legacy_file_id}").status_code == 404
+    authenticate_as(superuser)
+    response = test_client.get("/files/")
+    assert response.status_code == 200
+    assert [file["id"] for file in response.json()] == [legacy_file_id]
+    assert test_client.get(f"/files/{legacy_file_id}").content == b"legacy"
