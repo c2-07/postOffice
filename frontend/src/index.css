@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+html,
+body {
+  margin: 0;
+  background-color: #e7c3bc; /* Matches C.bg from theme.js */
+}
