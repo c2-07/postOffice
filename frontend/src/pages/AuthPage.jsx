@@ -9,16 +9,37 @@ export function AuthPage({ mode, onSuccess }) {
   const navigate = useNavigate();
   const isLogin = mode === "login";
   const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [error, setError] = useState("");
 
   function update(field) {
     return (e) => setForm({ ...form, [field]: e.target.value });
   }
 
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault();
-    const userData = { email: form.email, name: form.name || "User" };
-    onSuccess(userData);
-    navigate("/upload");
+    setError("");
+    try {
+      const endpoint = isLogin ? "/api/auth/login" : "/api/auth/signup";
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: form.email, password: form.password }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.detail?.[0]?.msg || data?.detail || "Authentication failed");
+      }
+
+      const data = await res.json(); // AuthResponse { user, access_token }
+      // The old fake auth used { email, name }, let's map it or just pass data
+      onSuccess(data);
+      navigate("/upload");
+    } catch (err) {
+      setError(err.message);
+    }
   }
 
   return (
@@ -55,9 +76,9 @@ export function AuthPage({ mode, onSuccess }) {
         {/* Right Column: Form */}
         <div className="md:w-[55%] flex flex-col justify-center">
           <form onSubmit={submit} className="flex flex-col h-full justify-center">
-            <div className="flex flex-col gap-y-10 mb-12">
+            <div className="flex flex-col gap-y-10 mb-8">
               {!isLogin && (
-                <LineField icon={User} label="Name" required type="text" value={form.name} onChange={update("name")} />
+                <LineField icon={User} label="Name (Optional)" type="text" value={form.name} onChange={update("name")} />
               )}
               <LineField icon={Mail} label="Email Address" required type="email" value={form.email} onChange={update("email")} />
               <div>
@@ -79,6 +100,12 @@ export function AuthPage({ mode, onSuccess }) {
               </div>
             </div>
 
+            {error && (
+              <div className="mb-6 p-3 rounded text-sm" style={{ backgroundColor: "rgba(193,64,42,0.1)", color: C.rustDark, ...mono }}>
+                {error}
+              </div>
+            )}
+
             <button type="submit" className="w-full py-4 rounded hover:opacity-90 transition-opacity flex items-center justify-center mt-auto" style={{ ...mono, backgroundColor: C.ink, color: C.paper, fontSize: "14px" }}>
               {isLogin ? "Unlock & Enter" : "Register Address"}
             </button>
@@ -99,3 +126,4 @@ export function AuthPage({ mode, onSuccess }) {
     </div>
   );
 }
+
