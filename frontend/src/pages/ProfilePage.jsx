@@ -85,7 +85,7 @@ export function ProfilePage({ isLoggedIn, user }) {
     setIsDeletingAll(true);
     try {
       const token = user?.access_token;
-      const res = await fetch("/api/files/", {
+      const res = await fetch("/api/files/all", {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -144,22 +144,21 @@ export function ProfilePage({ isLoggedIn, user }) {
 
       <StampCard>
         <div className="flex items-start justify-between mb-10">
-          <div>
-            <p
-              className="text-sm uppercase tracking-widest mb-2"
-              style={{ ...mono, color: C.rustDark }}
-            >
-              Your History
-            </p>
-            <h2
-              className="text-3xl md:text-4xl"
-              style={{ ...display, fontWeight: 600, color: C.ink }}
-            >
-              Sent Parcels
-            </h2>
-          </div>
-          <div className="flex flex-col items-end gap-3">
-            <StampCircle rotate={-8} size="w-20 h-20" text="SNDR" sub="LOG" />
+          <div className="flex flex-col items-start gap-4">
+            <div>
+              <p
+                className="text-sm uppercase tracking-widest mb-2"
+                style={{ ...mono, color: C.rustDark }}
+              >
+                Your History
+              </p>
+              <h2
+                className="text-3xl md:text-4xl"
+                style={{ ...display, fontWeight: 600, color: C.ink }}
+              >
+                Sent Parcels
+              </h2>
+            </div>
             {files.length > 0 && !isLoading && (
               <button
                 onClick={() => setConfirmDialog('all')}
@@ -171,6 +170,9 @@ export function ProfilePage({ isLoggedIn, user }) {
                 Delete All
               </button>
             )}
+          </div>
+          <div>
+            <StampCircle rotate={-8} size="w-20 h-20" text="SNDR" sub="LOG" />
           </div>
         </div>
 

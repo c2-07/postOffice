@@ -58,7 +58,7 @@ async def delete_file(service: FileServiceDeps, id: UUID, user: CurrentUserDeps)
             detail="file not found",
         )
 
-@router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/all", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_all_files(service: FileServiceDeps, user: CurrentUserDeps):
     try:
         await service.delete_all_files(user)
