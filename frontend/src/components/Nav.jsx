@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import { C, display, mono } from "../theme";
 
 export function Nav({ isLoggedIn, logout, user }) {
-  // Extract user email, handling both old {email} format and new {user: {email}, access_token} format
   const userEmail = user?.user?.email || user?.email || "";
+  const firstName = userEmail.split('@')[0];
+  const displayName = firstName ? firstName.charAt(0).toUpperCase() + firstName.slice(1) : "";
+
 
   return (
     <nav className="flex items-center justify-between max-w-5xl mx-auto px-6 py-8 w-full">
@@ -15,7 +17,7 @@ export function Nav({ isLoggedIn, logout, user }) {
         <Link to="/upload" className="hover:underline" style={{ color: C.ink }}>Upload</Link>
         {isLoggedIn ? (
           <div className="flex items-center gap-6">
-            <span style={{ color: "rgba(58,42,32,0.6)" }}>{userEmail}</span>
+            <Link to="/profile" className="hover:underline" style={{ color: "rgba(58,42,32,0.8)" }}>{displayName}</Link>
             <button onClick={logout} className="hover:underline" style={{ color: C.ink }}>
               Log out
             </button>

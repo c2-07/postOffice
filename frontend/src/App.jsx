@@ -6,6 +6,8 @@ import { Footer } from "./components/Footer";
 import { HomePage } from "./pages/HomePage";
 import { UploadPage } from "./pages/UploadPage";
 import { AuthPage } from "./pages/AuthPage";
+import { DownloadPage } from "./pages/DownloadPage";
+import { ProfilePage } from "./pages/ProfilePage";
 
 function FontImport() {
   return (
@@ -35,16 +37,45 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen flex flex-col" style={{ backgroundColor: C.bg }}>
+      <div
+        className="min-h-screen flex flex-col"
+        style={{ backgroundColor: C.bg }}
+      >
         <FontImport />
         <Nav isLoggedIn={isLoggedIn} logout={handleLogout} user={user} />
 
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/upload" element={<UploadPage isLoggedIn={isLoggedIn} user={user} />} />
-            <Route path="/login" element={isLoggedIn ? <Navigate to="/upload" /> : <AuthPage mode="login" onSuccess={handleLogin} />} />
-            <Route path="/signup" element={isLoggedIn ? <Navigate to="/upload" /> : <AuthPage mode="signup" onSuccess={handleLogin} />} />
+            <Route path="/p/:id" element={<DownloadPage />} />
+            <Route
+              path="/profile"
+              element={<ProfilePage isLoggedIn={isLoggedIn} user={user} />}
+            />
+            <Route
+              path="/upload"
+              element={<UploadPage isLoggedIn={isLoggedIn} user={user} />}
+            />
+            <Route
+              path="/login"
+              element={
+                isLoggedIn ? (
+                  <Navigate to="/upload" />
+                ) : (
+                  <AuthPage mode="login" onSuccess={handleLogin} />
+                )
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                isLoggedIn ? (
+                  <Navigate to="/upload" />
+                ) : (
+                  <AuthPage mode="signup" onSuccess={handleLogin} />
+                )
+              }
+            />
           </Routes>
         </main>
 

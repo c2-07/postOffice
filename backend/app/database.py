@@ -1,10 +1,11 @@
-from typing import Generator
-from app.core.config import settings
-from app.models import File, User # noqa: F401
+from collections.abc import Iterator
 from sqlalchemy import inspect, text
 from sqlmodel import create_engine, SQLModel, Session
+from app.core.config import settings
+from app.models import File, User  # noqa: F401
 
 engine = create_engine(settings.DATABASE_URL, echo=settings.DEBUG)
+
 
 def _migrate_sqlite_file_ownership() -> None:
     """Add the nullable ownership column to databases created before auth."""
@@ -27,6 +28,7 @@ def init_db() -> None:
     _migrate_sqlite_file_ownership()
     SQLModel.metadata.create_all(engine)
 
-def get_db_session() -> Generator[Session, None, None]:
+
+def get_db_session() -> Iterator[Session]:
     with Session(engine) as session:
         yield session

@@ -12,10 +12,13 @@ export function ParcelReady({ link, stampDate }) {
   }
 
   return (
-    <div className="mt-12 pt-10" style={{ borderTop: `1.5px dashed ${C.line}` }}>
+    <div
+      className="mt-12 pt-10"
+      style={{ borderTop: `1.5px dashed ${C.line}` }}
+    >
       <div className="flex items-center justify-between mb-8">
         <div
-          className="w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0"
+          className="w-20 h-20 rounded-full flex items-center justify-center shrink-0"
           style={{
             border: `2px solid ${C.rust}`,
             transform: "rotate(-8deg)",
@@ -52,7 +55,7 @@ export function ParcelReady({ link, stampDate }) {
         </span>
         <button
           onClick={copyLink}
-          className="flex items-center gap-2 text-sm px-5 py-2.5 rounded hover:opacity-90 transition-opacity flex-shrink-0"
+          className="flex items-center gap-2 text-sm px-5 py-2.5 rounded hover:opacity-90 transition-opacity shrink-0"
           style={{ ...mono, backgroundColor: C.ink, color: C.paper }}
         >
           {copied ? <Check size={16} /> : <Copy size={16} />}

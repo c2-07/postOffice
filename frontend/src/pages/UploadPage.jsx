@@ -5,7 +5,6 @@ import { C, display, mono } from "../theme";
 import { StampCard } from "../components/StampCard";
 import { StampCircle } from "../components/StampCircle";
 
-// Extracted Components
 import { LoginPrompt } from "../components/LoginPrompt";
 import { FileDropzone } from "../components/FileDropzone";
 import { DeliveryOptions } from "../components/DeliveryOptions";
@@ -34,50 +33,45 @@ export function UploadPage({ isLoggedIn, user }) {
     return (bytes / (1024 * 1024)).toFixed(1) + " MB";
   }
 
-  function randomToken() {
-    const chars = "abcdefghjkmnpqrstuvwxyz23456789";
-    let out = "";
-    for (let i = 0; i < 4; i++) out += chars[Math.floor(Math.random() * chars.length)];
-    out += "-";
-    for (let i = 0; i < 4; i++) out += chars[Math.floor(Math.random() * chars.length)];
-    return out;
-  }
-
   async function uploadFile() {
     setIsUploading(true);
     setError("");
-    
+
     try {
       const formData = new FormData();
       formData.append("file", file);
-      
+
       // If backend later supports these options, you'd append them too
       // formData.append("is_private", isPrivate);
       // formData.append("has_password", hasPassword);
-      
+
       const token = user?.access_token;
-      
+
       const res = await fetch("/api/files/", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: formData,
       });
 
       if (!res.ok) {
         const data = await res.json().catch(() => null);
-        throw new Error(data?.detail?.[0]?.msg || data?.detail || "Upload failed");
+        throw new Error(
+          data?.detail?.[0]?.msg || data?.detail || "Upload failed",
+        );
       }
-      
+
       const data = await res.json().catch(() => ({}));
-      const fileId = data.id || randomToken();
-      
+      const fileId = data.id;
+
       setLink(window.location.origin + "/p/" + fileId);
-      
+
       const d = new Date();
       setStampDate(
-        d.toLocaleDateString("en-GB", { day: "2-digit", month: "short" }).toUpperCase(),
+        d
+          .toLocaleDateString("en-GB", { day: "2-digit", month: "short" })
+          .toUpperCase(),
       );
     } catch (err) {
       setError(err.message);
@@ -109,7 +103,10 @@ export function UploadPage({ isLoggedIn, user }) {
             >
               Step one
             </p>
-            <h2 className="text-3xl md:text-4xl" style={{ ...display, fontWeight: 600, color: C.ink }}>
+            <h2
+              className="text-3xl md:text-4xl"
+              style={{ ...display, fontWeight: 600, color: C.ink }}
+            >
               Post a file
             </h2>
           </div>
@@ -117,20 +114,42 @@ export function UploadPage({ isLoggedIn, user }) {
         </div>
 
         {!file ? (
-          <FileDropzone onFileSelect={(f) => { setFile(f); setLink(null); setError(""); }} />
+          <FileDropzone
+            onFileSelect={(f) => {
+              setFile(f);
+              setLink(null);
+              setError("");
+            }}
+          />
         ) : (
-          <div className="rounded-lg p-6 md:p-8" style={{ border: `1.5px solid ${C.line}` }}>
-            <div className="flex items-center justify-between mb-8 pb-6" style={{ borderBottom: `2px dashed ${C.line}` }}>
+          <div
+            className="rounded-lg p-6 md:p-8"
+            style={{ border: `1.5px solid ${C.line}` }}
+          >
+            <div
+              className="flex items-center justify-between mb-8 pb-6"
+              style={{ borderBottom: `2px dashed ${C.line}` }}
+            >
               <div>
-                <p className="text-xs uppercase tracking-widest mb-1" style={{ ...mono, color: "rgba(58,42,32,0.6)" }}>
+                <p
+                  className="text-xs uppercase tracking-widest mb-1"
+                  style={{ ...mono, color: "rgba(58,42,32,0.6)" }}
+                >
                   Selected Parcel
                 </p>
                 <div className="flex items-center gap-3">
-                  <p className="text-lg md:text-xl truncate max-w-[200px] md:max-w-[400px]" style={{ ...mono, color: C.ink }}>
+                  <p
+                    className="text-lg md:text-xl truncate max-w-50 md:max-w-100"
+                    style={{ ...mono, color: C.ink }}
+                  >
                     {file.name}
                   </p>
                   <button
-                    onClick={() => { setFile(null); setLink(null); setError(""); }}
+                    onClick={() => {
+                      setFile(null);
+                      setLink(null);
+                      setError("");
+                    }}
                     className="text-xs hover:underline"
                     style={{ ...mono, color: C.rust }}
                     disabled={isUploading}
@@ -139,23 +158,44 @@ export function UploadPage({ isLoggedIn, user }) {
                   </button>
                 </div>
               </div>
-              <span className="text-sm px-3 py-1.5 rounded" style={{ ...mono, backgroundColor: "rgba(58,42,32,0.08)", color: C.ink }}>
+              <span
+                className="text-sm px-3 py-1.5 rounded"
+                style={{
+                  ...mono,
+                  backgroundColor: "rgba(58,42,32,0.08)",
+                  color: C.ink,
+                }}
+              >
                 {formatSize(file.size)}
               </span>
             </div>
 
             <DeliveryOptions
-              isPrivate={isPrivate} setIsPrivate={setIsPrivate}
-              hasPassword={hasPassword} setHasPassword={setHasPassword}
-              password={password} setPassword={setPassword}
-              isAnonymous={isAnonymous} setIsAnonymous={setIsAnonymous}
-              hasExpiry={hasExpiry} setHasExpiry={setHasExpiry}
-              expiryDate={expiryDate} setExpiryDate={setExpiryDate}
-              expiryTime={expiryTime} setExpiryTime={setExpiryTime}
+              isPrivate={isPrivate}
+              setIsPrivate={setIsPrivate}
+              hasPassword={hasPassword}
+              setHasPassword={setHasPassword}
+              password={password}
+              setPassword={setPassword}
+              isAnonymous={isAnonymous}
+              setIsAnonymous={setIsAnonymous}
+              hasExpiry={hasExpiry}
+              setHasExpiry={setHasExpiry}
+              expiryDate={expiryDate}
+              setExpiryDate={setExpiryDate}
+              expiryTime={expiryTime}
+              setExpiryTime={setExpiryTime}
             />
-            
+
             {error && (
-              <div className="mb-4 p-3 rounded text-sm" style={{ backgroundColor: "rgba(193,64,42,0.1)", color: C.rustDark, ...mono }}>
+              <div
+                className="mb-4 p-3 rounded text-sm"
+                style={{
+                  backgroundColor: "rgba(193,64,42,0.1)",
+                  color: C.rustDark,
+                  ...mono,
+                }}
+              >
                 {error}
               </div>
             )}
@@ -164,7 +204,12 @@ export function UploadPage({ isLoggedIn, user }) {
               onClick={uploadFile}
               disabled={isUploading}
               className="w-full mt-2 py-4 rounded hover:opacity-90 transition-opacity flex items-center justify-center gap-3 disabled:opacity-50"
-              style={{ ...mono, backgroundColor: C.ink, color: C.paper, fontSize: "15px" }}
+              style={{
+                ...mono,
+                backgroundColor: C.ink,
+                color: C.paper,
+                fontSize: "15px",
+              }}
             >
               {isUploading ? (
                 <>
@@ -184,4 +229,3 @@ export function UploadPage({ isLoggedIn, user }) {
     </div>
   );
 }
-
