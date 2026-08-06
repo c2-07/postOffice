@@ -40,6 +40,20 @@ class FileService:
         self.session.delete(file_record)
         self.session.commit()
 
+    async def delete_all_files(self, user: CurrentUser) -> None:
+        stmt = select(File).where(File.owner_id == user.id)
+        files = self.session.exec(stmt).all()
+        
+        for file in files:
+            try:
+                self.storage.remove(file.storage_key)
+            except Exception:
+                pass # Proceed to delete db record even if storage remove fails
+            self.session.delete(file)
+            
+        self.session.commit()
+
+
     async def get_authorized_file(self, id: UUID, user: CurrentUser) -> File:
         stmt = select(File).where(File.id == id)
         file = self.session.exec(stmt).first()
@@ -51,6 +65,16 @@ class FileService:
             raise FileRecordNotFoundError()
 
         return file
+
+    async def get_public_file(self, id: UUID) -> File:
+        stmt = select(File).where(File.id == id)
+        file = self.session.exec(stmt).first()
+
+        if file is None or file.is_deleted or file.expired:
+            raise FileRecordNotFoundError()
+
+        return file
+
 
     async def get_file_stream(self, storage_key: str) -> AsyncGenerator[bytes, None]:
         return self.storage.get_stream(storage_key)
