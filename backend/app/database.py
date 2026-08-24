@@ -1,6 +1,8 @@
 from collections.abc import Iterator
+
 from sqlalchemy import inspect, text
-from sqlmodel import create_engine, SQLModel, Session
+from sqlmodel import Session, SQLModel, create_engine
+
 from app.core.config import settings
 from app.models import File, User  # noqa: F401
 
