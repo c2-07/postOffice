@@ -4,9 +4,11 @@ PostOffice is a full-stack web application designed for storing and managing fil
 
 ## Previews
 
-<!-- Space for application screenshots below -->
-<!-- ![Dashboard](/docs/images/dashboard.png) -->
-<!-- ![File Upload](/docs/images/upload.png) -->
+<img width="3140" height="2046" alt="Screenshot 2" src="https://github.com/user-attachments/assets/fbc51dd1-6781-475a-a00e-2a6d183edfcd" />
+<img width="3140" height="2046" alt="Screenshot 3" src="https://github.com/user-attachments/assets/0fa89133-8e20-4e9b-b81e-7c9f135b681c" />
+<img width="3140" height="2046" alt="Screenshot 4" src="https://github.com/user-attachments/assets/b3bc81fb-247f-4900-8030-33b50a41ec7b" />
+<img width="3140" height="2046" alt="Screenshot 5" src="https://github.com/user-attachments/assets/5825a8e5-0324-4908-9666-444069dd1736" />
+
 
 ## Tech Stack
 
